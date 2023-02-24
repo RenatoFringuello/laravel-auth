@@ -1,5 +1,5 @@
 <form   class="{{($method != 'DELETE')? 'w-50 mx-auto':$extraClasses}}" 
-        action="{{route($route, [$project->id, 'sort' => $orderBy])}}" 
+        action="{{route($route, [$project, 'sort' => $orderBy])}}" 
         method="POST"
         enctype="multipart/form-data">
     @csrf
