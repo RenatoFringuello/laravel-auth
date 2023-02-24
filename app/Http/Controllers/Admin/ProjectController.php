@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -20,6 +21,7 @@ class ProjectController extends Controller
     protected function getValidatedData(Request $request){
         $validation = [
             'title' => "required|max:50",
+            'image' => "required|image",
             'author_name' => 'required|max:100',
             'author_lastname' => 'required|max:100',
             'content' => 'required',
@@ -29,6 +31,8 @@ class ProjectController extends Controller
         $validationMessages = [
             'title.required' => 'Il titolo è un campo obbligatorio',
             'title.max' => 'Hai inserito troppi caratteri in title',
+            'image.required' => 'La cover è un campo obbligatorio',
+            'image.image' => 'Qui puoi inserire solo immagini',
             'author_name.required' => 'Il nome dell\'autore è un campo obbligatorio',
             'author_name.max' => 'Hai inserito troppi caratteri per il nome',
             'author_lastname.required' => 'Il cognome dell\'autore è un campo obbligatorio',
@@ -86,15 +90,15 @@ class ProjectController extends Controller
     {
         $data = $this->getValidatedData($request);
         $data['slug'] = Str::slug($data['title']);
+        /**
+         * in data['image'] mettiamo il nome dell'immagine e con storage la aggiungiamo nella cartella storage indicando 
+         * il percorso nel primo parametro
+         * e l'immagine validata o presa dall'input
+         */
+        $data['image'] = Storage::put('images/projects', $data['image']);
         // dd($data);
         $project = new Project();
-        $project->slug = $data['slug'];
-        $project->title = $data['title'];
-        $project->author_name = $data['author_name'];
-        $project->author_lastname = $data['author_lastname'];
-        $project->content = $data['content'];
-        $project->start_date = $data['start_date'];
-        $project->end_date = $data['end_date'];
+        $project->fill($data);
         $project->save();
         return redirect()->route('admin.projects.show', $project);
     }
@@ -140,12 +144,12 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy(Project  $project, Request $request)
     {
-        Project::destroy($id);
+        Project::destroy($project->id);
         $orderBy = $request->sort;
         // dd($orderBy);
         return redirect()->route('admin.projects.index', ['sort' => $orderBy ?? 'id']);
