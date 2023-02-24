@@ -13,10 +13,10 @@
                     value="{{old('title') ?? $project->title}}">
         </div>
         <div class="mb-3">
-            <label for="image" class="form-label">Project Cover</label>
-            <input  type="file" class="@error('cover') border-danger @enderror form-control" 
-                        placeholder="@error('cover'){{$message}}@enderror" id="cover" name="cover"
-                        value="{{old('cover', $project->cover)}}">
+            <label for="image" class="form-label">Project Cover *</label>
+            <input  type="file" class="@error('image') border-danger @enderror form-control" 
+                        placeholder="@error('image'){{$message}}@enderror" id="image" name="image"
+                        value="{{old('image', $project->image)}}">
         </div>
         <div class="mb-3">
                 <label for="author_name" class="form-label">Author Name *</label>
