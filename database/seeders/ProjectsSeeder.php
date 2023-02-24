@@ -24,10 +24,11 @@ class ProjectsSeeder extends Seeder
             do{
                 $proj->title = $faker->unique()->realTextBetween(4, 20);
             }while(in_array(['title' => $proj->title], $projectsInDb));
-            $proj->slug = Str::of($proj->title)->slug('-');
+            $proj->slug = Str::slug($proj->title) . '';
             $proj->author_name = $faker->firstName();
             $proj->author_lastname = $faker->lastName();
             $proj->content = $faker->realTextBetween(30, 200);
+            $proj->image = 'placeholder.jpg';
             $proj->start_date = $faker->dateTimeBetween('1990-12-20');
             $proj->end_date = (rand(0,1)) ? $faker->dateTimeBetween($proj->start_date) : null;
             // dd($proj);
