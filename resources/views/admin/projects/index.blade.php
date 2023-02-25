@@ -3,7 +3,7 @@
 @section('title', "Manage projects | RF")
 
 @section('content')
-    <div class="min-h-100vh pt-5">
+    <div class="mh-100vh pt-5">
         {{-- table --}}
         <table class="table table-striped mt-5">
             <thead class="bg-primary text-white">

@@ -3,7 +3,7 @@
 @section('title', "Manage project n°$project->id | RF")
 
 @section('content')
-    <div class="min-h-100vh d-flex">
+    <div class="mh-100vh d-flex">
         <div class="col-12 col-sm-8 col-md-11 col-lg-9 m-auto text-decoration-none text-black">
             <div class="card flex-md-row p-2">
                 <div class="left w-md-50 mb-3 mb-md-0">

@@ -3,9 +3,9 @@
 @section('title', "Welcome back, ". Auth::user()->name." | RF")
 
 @section('content')
-<div class="container min-h-100vh pt-5">
+<div class="mh-100vh pt-5">
     <div class="row justify-content-center mt-5">
-        <div class="col-md-8">
+        <div class="col-xl-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 

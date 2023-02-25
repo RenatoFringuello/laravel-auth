@@ -22,7 +22,7 @@
     @vite(['resources/js/app.js'])
 </head>
 
-<body class="min-h-100vh">
+<body class="mh-100vh">
     <div id="app">
         @include('layouts.partials.header')
 

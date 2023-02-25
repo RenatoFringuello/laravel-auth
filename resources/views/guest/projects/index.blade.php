@@ -3,7 +3,7 @@
 @section('title', count($projects). ' projects | RF')
 
 @section('content')
-    <div class="min-h-100vh pt-4">
+    <div class="mh-100vh pt-4">
         <div class="mt-5">
             {{-- homepage --}}
             {{ $projects->links()}}

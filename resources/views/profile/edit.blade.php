@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="container min-h-100vh pt-5">
+<div class="mh-100vh pt-5">
     <h2 class="fs-4 text-secondary my-4">
         {{ __('Profile') }}
     </h2>
