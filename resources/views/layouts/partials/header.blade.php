@@ -18,9 +18,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('/') }}">{{ __('Home') }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.projects.index', ['sort' => 'id']) }}">{{ __('Projects') }}</a>
-                    </li>
+                    @if (isset(Auth::user()->name))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('admin.projects.index', ['sort' => 'id']) }}">{{ __('Projects') }}</a>
+                        </li>
+                    @endif
                 </ul>
     
                 <!-- Right Side Of Navbar -->
