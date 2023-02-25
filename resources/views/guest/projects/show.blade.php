@@ -15,12 +15,6 @@
                     <p class="mb-3">{{$project->content}}</p>
                     <div>{{ $project->start_date->format('Y-m-d') }}</div>
                     <div class="mb-3 text-success {{ $project->end_date ?? 'text-danger' }}">{{ isset($project->end_date) ? $project->end_date->format('Y-m-d'): 'work in progress' }}</div>
-                    <div class="btn-container">
-                        <a href="{{route('admin.projects.edit', $project)}}" class="btn btn-primary">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                        @include('layouts.partials.form', ['method' => 'DELETE', 'route' => 'admin.projects.destroy', 'orderBy'=> null, 'project' => $project, 'extraClasses' => 'btn p-0'])
-                    </div>
                 </div>
             </div>
         </div>
