@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -22,8 +23,8 @@ class ProjectController extends Controller
         $validation = [
             'title' => "required|max:50",
             'image' => "image",
-            'author_name' => 'required|max:100',
-            'author_lastname' => 'required|max:100',
+            // 'author_name' => 'required|max:100',
+            // 'author_lastname' => 'required|max:100',
             'content' => 'required',
             'start_date' => 'required|date|after:1990-12-20 00:00:00',
             'end_date' => 'date|nullable|after:start_date',
@@ -32,10 +33,10 @@ class ProjectController extends Controller
             'title.required' => 'Il titolo è un campo obbligatorio',
             'title.max' => 'Hai inserito troppi caratteri in title',
             'image.image' => 'Qui puoi inserire solo immagini',
-            'author_name.required' => 'Il nome dell\'autore è un campo obbligatorio',
-            'author_name.max' => 'Hai inserito troppi caratteri per il nome',
-            'author_lastname.required' => 'Il cognome dell\'autore è un campo obbligatorio',
-            'author_lastname.max' => 'Hai inserito troppi caratteri il cognome',
+            // 'author_name.required' => 'Il nome dell\'autore è un campo obbligatorio',
+            // 'author_name.max' => 'Hai inserito troppi caratteri per il nome',
+            // 'author_lastname.required' => 'Il cognome dell\'autore è un campo obbligatorio',
+            // 'author_lastname.max' => 'Hai inserito troppi caratteri il cognome',
             'content.required' => 'Il contenuto del progetto è un campo obbligatorio',
             'start_date.required' => 'La data di inizio è un campo obbligatorio',
             'start_date.date' => 'La data di inizio che hai scritto non esiste in nessun calendario neanche in quello dei maya',
@@ -61,7 +62,7 @@ class ProjectController extends Controller
         $orderBy = $request->sort;
         //manage author
         $orderBy = ($orderBy == 'author') ? 'author_lastname' : $orderBy;
-        $projects = Project::orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString();
+        $projects = Project::where('author_username', 'LIKE', Auth::user()->username)->orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString();
 
         $fields = ['Title', 'Author', 'Start Date', 'End Date'];
 
@@ -89,14 +90,11 @@ class ProjectController extends Controller
     {
         $data = $this->getValidatedData($request);
         $data['slug'] = Str::slug($data['title']);
-        /**
-         * in data['image'] mettiamo il nome dell'immagine e con storage la aggiungiamo nella cartella storage indicando 
-         * il percorso nel primo parametro
-         * e l'immagine validata o presa dall'input
-         */
-        // $data['image'] = Storage::put('/images/projects',$data['image']) ?? '/images/projects/placeholder.jpg';
-        $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
+        $data['author_username'] = Auth::user()->username;
+        $data['author_name'] = Auth::user()->name;
+        $data['author_lastname'] = Auth::user()->lastname;
         // dd($data);
+        $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
         $project = new Project();
         $project->fill($data);
         $project->save();
@@ -140,8 +138,8 @@ class ProjectController extends Controller
         // dd($data['image']);
         $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
         //se l'immagine da cambiare è diversa dal placeholder eliminala dallo storage
-        if($data['image'] == 'images/projects/placeholder.jpg')//non so come ma fa quello che deve anche se la logica non torna
-            Storage::delete('/images/projects',$project->image);
+        if($project->image != 'images/projects/placeholder.jpg')
+            Storage::delete('/images/projects', $project->image);
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
     }
