@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('slug',100);
             $table->string('title',50)->unique();
+            $table->string('author_username',100);
             $table->string('author_name',100);
             $table->string('author_lastname',100);
             $table->text('content',100);
