@@ -21,7 +21,7 @@ class ProjectController extends Controller
     protected function getValidatedData(Request $request){
         $validation = [
             'title' => "required|max:50",
-            'image' => "required|image",
+            'image' => "image",
             'author_name' => 'required|max:100',
             'author_lastname' => 'required|max:100',
             'content' => 'required',
@@ -31,7 +31,6 @@ class ProjectController extends Controller
         $validationMessages = [
             'title.required' => 'Il titolo è un campo obbligatorio',
             'title.max' => 'Hai inserito troppi caratteri in title',
-            'image.required' => 'La cover è un campo obbligatorio',
             'image.image' => 'Qui puoi inserire solo immagini',
             'author_name.required' => 'Il nome dell\'autore è un campo obbligatorio',
             'author_name.max' => 'Hai inserito troppi caratteri per il nome',
@@ -62,7 +61,7 @@ class ProjectController extends Controller
         $orderBy = $request->sort;
         //manage author
         $orderBy = ($orderBy == 'author') ? 'author_lastname' : $orderBy;
-        $projects = Project::orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(20)->withQueryString();
+        $projects = Project::orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString();
 
         $fields = ['Title', 'Author', 'Start Date', 'End Date'];
 
@@ -95,7 +94,8 @@ class ProjectController extends Controller
          * il percorso nel primo parametro
          * e l'immagine validata o presa dall'input
          */
-        $data['image'] = Storage::put('images/projects', $data['image']);
+        // $data['image'] = Storage::put('/images/projects',$data['image']) ?? '/images/projects/placeholder.jpg';
+        $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
         // dd($data);
         $project = new Project();
         $project->fill($data);
@@ -136,7 +136,12 @@ class ProjectController extends Controller
     {
         $data = $this->getValidatedData($request);
         $data['slug'] = Str::slug($data['title']);
-        // dd($data);
+
+        // dd($data['image']);
+        $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
+        //se l'immagine da cambiare è diversa dal placeholder eliminala dallo storage
+        if($data['image'] == 'images/projects/placeholder.jpg')//non so come ma fa quello che deve anche se la logica non torna
+            Storage::delete('/images/projects',$project->image);
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
     }
@@ -149,6 +154,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project  $project, Request $request)
     {
+        //qui la logica funziona
+        if($project->image != 'images/projects/placeholder.jpg')
+            Storage::delete('/images/projects',$project->image);
         Project::destroy($project->id);
         $orderBy = $request->sort;
         // dd($orderBy);
