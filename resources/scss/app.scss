@@ -1,5 +1,9 @@
 @import '~bootstrap/scss/bootstrap';
 
+.min-h-100vh{
+    min-height:100vh !important;
+}
+
 //object fit
 .object-fit-cover{
     object-fit: cover !important;
