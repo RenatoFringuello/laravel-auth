@@ -1,4 +1,4 @@
-<header>
+<header class="fixed-top">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container-md">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">

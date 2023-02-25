@@ -1,4 +1,4 @@
-<form   class="{{($method != 'DELETE')? 'w-50 mx-auto':$extraClasses}}" 
+<form   class="{{($method != 'DELETE')? 'w-50 mt-5 mx-auto':$extraClasses}}" 
         action="{{route($route, [$project, 'sort' => $orderBy])}}" 
         method="POST"
         enctype="multipart/form-data"> 
@@ -14,7 +14,7 @@
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Project Cover *</label>
-            <input  type="file" class="@error('image') border-danger @enderror form-control" 
+            <input type="file" class="@error('image') border-danger @enderror form-control" 
                         placeholder="@error('image'){{$message}}@enderror" id="image" name="image"
                         value="{{old('image', $project->image)}}">
         </div>

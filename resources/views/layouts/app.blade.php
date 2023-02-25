@@ -22,11 +22,11 @@
     @vite(['resources/js/app.js'])
 </head>
 
-<body>
+<body class="min-h-100vh">
     <div id="app">
         @include('layouts.partials.header')
 
-        <main class="py-3 container-md">
+        <main class="container-md">
             @yield('content')
         </main>
 
