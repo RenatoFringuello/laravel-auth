@@ -17,7 +17,7 @@
                     @endif
 
                     <p>
-                        {{ __("Welcome back ". Auth::user()->name ) }}
+                        {{ __("Welcome back ". Auth::user()->name .' '. Auth::user()->lastname ) }}
                     </p>
                     <div>
                         <a href="{{route('admin.projects.index')}}" class="btn btn-primary">Let's get started</a>
