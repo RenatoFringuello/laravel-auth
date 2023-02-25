@@ -28,7 +28,7 @@ class ProjectsSeeder extends Seeder
             $proj->author_name = $faker->firstName();
             $proj->author_lastname = $faker->lastName();
             $proj->content = $faker->realTextBetween(30, 200);
-            $proj->image = 'placeholder.jpg';
+            $proj->image = 'images/projects/placeholder.jpg';
             $proj->start_date = $faker->dateTimeBetween('1990-12-20');
             $proj->end_date = (rand(0,1)) ? $faker->dateTimeBetween($proj->start_date) : null;
             // dd($proj);
