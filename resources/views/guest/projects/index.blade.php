@@ -16,7 +16,7 @@
                     <div class="card p-2 h-100 d-flex flex-column justify-content-between">
                         <div class="top">
                             <h4>{{ $project->title }}</h4>
-                            <pre class="text-secondary">{{ $project->author_name . ' ' . $project->author_lastname }}</pre>
+                            <pre class="text-secondary">{{ $project->user->name . ' ' . $project->user->lastname }}</pre>
                             <p>{{ $project->content }}</p>
                         </div>
                         <div class="bottom">
