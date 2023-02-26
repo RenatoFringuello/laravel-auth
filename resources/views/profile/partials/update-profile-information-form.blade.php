@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-secondary">
+        <h2>
             {{ __('Profile Information') }}
         </h2>
 
-        <p class="mt-1 text-muted">
+        <p class="mt-1">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
@@ -18,12 +18,31 @@
         @method('patch')
 
         <div class="mb-2">
+            <label for="username">{{__('Username')}}</label>
+            <input class="form-control" type="text" name="username" id="username" autocomplete="username" value="{{old('username', $user->username)}}" required autofocus>
+            
+            @error('username')
+            <div class="alert alert-danger mt-2" role="alert">
+                <strong>{{ $message}}</strong>
+            </div>
+            @enderror
+        </div>
+        <div class="mb-2">
             <label for="name">{{__('Name')}}</label>
             <input class="form-control" type="text" name="name" id="name" autocomplete="name" value="{{old('name', $user->name)}}" required autofocus>
             @error('name')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->get('name')}}</strong>
-            </span>
+            <div class="alert alert-danger mt-2" role="alert">
+                <strong>{{ $message}}</strong>
+            </div>
+            @enderror
+        </div>
+        <div class="mb-2">
+            <label for="lastname">{{__('Lastname')}}</label>
+            <input class="form-control" type="text" name="lastname" id="lastname" autocomplete="lastname" value="{{old('lastname', $user->lastname)}}" required autofocus>
+            @error('lastname')
+            <div class="alert alert-danger mt-2" role="alert">
+                <strong>{{ $message}}</strong>
+            </div>
             @enderror
         </div>
 
@@ -35,9 +54,9 @@
             <input id="email" name="email" type="email" class="form-control" value="{{ old('email', $user->email)}}" required autocomplete="username" />
 
             @error('email')
-            <span class="alert alert-danger mt-2" role="alert">
-                <strong>{{ $errors->get('email')}}</strong>
-            </span>
+            <div class="alert alert-danger mt-2" role="alert">
+                <strong>{{ $message}}</strong>
+            </div>
             @enderror
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -71,7 +90,7 @@
                     el.style.display = 'block';
                 }
             </script>
-            <p id='profile-status' class="fs-5 text-muted">{{ __('Saved.') }}</p>
+            <div id='profile-status' class="fs-5 text-success">{{ __('Saved.') }}</div>
             @endif
         </div>
     </form>
