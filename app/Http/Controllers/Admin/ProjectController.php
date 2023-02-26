@@ -63,8 +63,8 @@ class ProjectController extends Controller
         //manage author
         $orderBy = ($orderBy == 'author') ? 'author_lastname' : $orderBy;
         
-        $projects = Project::where('user_id', '=', Auth::user()->id)->orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString()->all();
         // dd($projects);
+        $projects = Project::where('user_id', '=', Auth::user()->id)->orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString();
 
         $fields = ['Title', 'Start Date', 'End Date'];
 
