@@ -91,9 +91,9 @@ class ProjectController extends Controller
     {
         $data = $this->getValidatedData($request);
         $data['slug'] = Str::slug($data['title']);
-        $data['user_id'] = Auth::user()->id;
-        // dd($data);
         $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
+        $data['user_id'] = Auth::user()->id;
+
         $project = new Project();
         $project->fill($data);
         $project->save();
