@@ -125,20 +125,22 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project  $project)
+    public function update(Request $request, Project $project)
     {
         $data = $this->getValidatedData($request);
         $data['slug'] = Str::slug($data['title']);
 
-        // dd($data['image']);
-        $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
+        //if no image is passed use the placeholder
+        $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects', $data['image']);
+        
         //se l'immagine da cambiare è diversa dal placeholder eliminala dallo storage
         if($project->image != 'images/projects/placeholder.jpg')
             Storage::delete('/images/projects', $project->image);
+
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
     }
