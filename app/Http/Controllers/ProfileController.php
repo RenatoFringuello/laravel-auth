@@ -50,7 +50,7 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        //destroy avery project created by the user to destroy
+        //destroy every projects created by the user to destroy
         Project::destroy(User::find($user->id)->projects);
 
         Auth::logout();
