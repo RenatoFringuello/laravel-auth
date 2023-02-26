@@ -25,10 +25,12 @@
 <body class="mh-100vh">
     <div id="app">
         @include('layouts.partials.header')
-
+        
         <main class="container-md">
             @yield('content')
         </main>
+        
+        @include('layouts.partials.footer')
 
         @yield('scripts')
     </div>
