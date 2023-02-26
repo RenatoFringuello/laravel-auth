@@ -12,7 +12,7 @@
                 <div class="right w-100 w-md-50 px-md-3 d-flex flex-column justify-content-between">
                     <div class="top">
                         <h2>{{ $project->title }}</h2>
-                        <pre class="text-secondary fs-5 mb-3">{{ $project->author_name . ' ' . $project->author_lastname }}</pre>
+                        <pre class="text-secondary fs-5 mb-3">{{ $project->user->name . ' ' . $project->user->lastname }}</pre>
                         <p class="mb-3">{{$project->content}}</p>
                     </div>
                     <div class="bottom">
