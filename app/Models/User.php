@@ -46,7 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //ho aggiunto questo per le relazioni
+    /**
+     * get all the projects related to the user
+     *
+     * @return HasMany
+     */
     public function projects():HasMany{
         return $this->hasMany(Project::class);
     }

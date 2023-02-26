@@ -10,15 +10,30 @@ class Project extends Model
 {
     use HasFactory;
 
-    // 'author_username', 'author_name', 'author_lastname',
-    protected $fillable = ['slug','title',  'content', 'start_date', 'end_date', 'image', 'user_id'];
-    protected $dates = ['start_date','end_date'];
+    protected $fillable = [
+        'slug',
+        'title',
+        'content',
+        'start_date',
+        'end_date',
+        'image',
+        'user_id'
+    ];
+    protected $dates = [
+        'start_date',
+        'end_date'
+    ];
 
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+    /**
+     * get the user data related to the project
+     *
+     * @return BelongsTo
+     */
     public function user():BelongsTo{
         return $this->belongsTo(User::class);
     }
