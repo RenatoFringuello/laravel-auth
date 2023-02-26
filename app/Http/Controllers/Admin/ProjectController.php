@@ -153,12 +153,13 @@ class ProjectController extends Controller
      */
     public function destroy(Project  $project, Request $request)
     {
-        //qui la logica funziona
+        //delete the image of the project to destroy only if isn't the placeholder
         if($project->image != 'images/projects/placeholder.jpg')
             Storage::delete('/images/projects',$project->image);
+
         Project::destroy($project->id);
+
         $orderBy = $request->sort;
-        // dd($orderBy);
         return redirect()->route('admin.projects.index', ['sort' => $orderBy ?? 'id']);
     }
 }
