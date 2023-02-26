@@ -19,7 +19,7 @@ class UsersSeeder extends Seeder
     {
         $usersInDb = User::all(['username', 'email'])->toArray();
         // dd($usersInDb);
-        for ($i=0; $i<30; $i++) {
+        for ($i=0; $i<10; $i++) {
             $user = new User();
             do{
                 $user->username = $faker->unique()->userName();
