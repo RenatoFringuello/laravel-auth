@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', "Welcome back, ". Auth::user()->name." | RF")
+@section('title', "Welcome back, ". Auth::user()->username." | RF")
 
 @section('content')
 <div class="mh-100vh pt-5">
