@@ -62,9 +62,11 @@ class ProjectController extends Controller
         $orderBy = $request->sort;
         //manage author
         $orderBy = ($orderBy == 'author') ? 'author_lastname' : $orderBy;
-        $projects = Project::where('author_username', 'LIKE', Auth::user()->username)->orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString();
+        
+        $projects = Project::where('user_id', '=', Auth::user()->id)->orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString()->all();
+        // dd($projects);
 
-        $fields = ['Title', 'Author', 'Start Date', 'End Date'];
+        $fields = ['Title', 'Start Date', 'End Date'];
 
         return view('admin.projects.index',  compact('projects', 'fields', 'orderBy', 'dir'));
     }
@@ -90,9 +92,7 @@ class ProjectController extends Controller
     {
         $data = $this->getValidatedData($request);
         $data['slug'] = Str::slug($data['title']);
-        $data['author_username'] = Auth::user()->username;
-        $data['author_name'] = Auth::user()->name;
-        $data['author_lastname'] = Auth::user()->lastname;
+        $data['user_id'] = Auth::user()->id;
         // dd($data);
         $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
         $project = new Project();
