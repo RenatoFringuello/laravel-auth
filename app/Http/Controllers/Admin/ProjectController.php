@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 class ProjectController extends Controller
 {
 
+    //prova ad implementare un validated come fa Profile
     /**
      * return the data validated
      *
@@ -41,24 +42,28 @@ class ProjectController extends Controller
         return $request->validate($validation, $validationMessages);
     }
 
-
     /**
      * Display a listing of the resource.
      *
-     * @param  string $field
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        //get the oppsite of dir passed by get
+        //get the oppsite of dir (direction of orderBy) passed by get [int]
         $dir = !$request->dir;
-        //get the order by field
+
+        //get the field to order the query [string]
         $orderBy = $request->sort;
-        //manage author
-        $orderBy = ($orderBy == 'author') ? 'author_lastname' : $orderBy;
-        
-        // dd($projects);
-        $projects = Project::where('user_id', '=', Auth::user()->id)->orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')->paginate(10)->withQueryString();
+
+        /**
+         * get all the projects of the user 
+         * sorted by something or 'id' if none passed
+         * paginated by 10
+         */
+        $projects = Project::where('user_id', '=', Auth::user()->id)
+                    ->orderBy($orderBy ?? 'id', ($dir) ? 'ASC' : 'DESC')
+                    ->paginate(10)->withQueryString();
 
         $fields = ['Title', 'Start Date', 'End Date'];
 
