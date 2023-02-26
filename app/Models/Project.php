@@ -16,6 +16,8 @@ class Project extends Model
         'content',
         'start_date',
         'end_date',
+        // url,
+        // github_uri, //must be {{user->github_nickname/(project->slug || project->github_title)}}
         'image',
         'user_id'
     ];
