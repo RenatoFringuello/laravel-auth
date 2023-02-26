@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+use App\Models\Project;
 
 class ProfileController extends Controller
 {
@@ -47,6 +49,9 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        //destroy avery project created by the user to destroy
+        Project::destroy(User::find($user->id)->projects);
 
         Auth::logout();
 
