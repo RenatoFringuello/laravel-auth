@@ -90,7 +90,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $this->getValidatedData($request);
-        $data['slug'] = Str::slug($data['title']);
+        $data['slug'] = Str::slug($data['title'].Project::max('id').Auth::user()->id.rand(0,10200));
         $data['image'] = (!isset($data['image'])) ? 'images/projects/placeholder.jpg' : Storage::put('/images/projects',$data['image']);
         $data['user_id'] = Auth::user()->id;
 
