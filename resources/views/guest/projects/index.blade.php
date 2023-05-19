@@ -11,29 +11,29 @@
         <div class="row g-3 mb-3">
             @forelse ($projects as $project)
                 <a  href="{{route('guest.projects.show', $project)}}" 
-                    class="col-12 col-sm-6 col-lg-4 col-xl-3 text-decoration-none text-black">
+                    class="col-12 col-sm-6 col-lg-4 text-decoration-none text-black">
 
                     <div class="card p-2 h-100 d-flex flex-column justify-content-between">
-                        <div class="top">
-                            <h4>{{ $project->title }}</h4>
-                            <pre class="text-secondary">{{ $project->user->name . ' ' . $project->user->lastname }}</pre>
-                            <p>{{ $project->content }}</p>
+                        <div class="top d-flex flex-wrap">
+                            <img class="rounded-1 img-fluid mb-3" src="{{$project->image}}" alt="{{$project->title.'\'s thumbnail'}}">
+                            <div>
+                                <h4 class="mb-0">{{ $project->title }}</h4>
+                                <pre class="text-secondary mb-2">{{ $project->user->name . ' ' . $project->user->lastname }}</pre>
+                                <p class="mb-2">{{ $project->content }}</p>
+                            </div>
                         </div>
                         <div class="bottom">
                             <div>{{ $project->start_date->format('Y-m-d') }}</div>
                             <div class="text-success {{ $project->end_date ?? 'text-danger' }}">{{ isset($project->end_date) ? $project->end_date->format('Y-m-d'): 'work in progress' }}</div>
                         </div>
                     </div>
-                
                 </a>
 
-                @empty
+            @empty
 
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3 w-100 pt-5 text-secondary">
-                    <h1 class="text-center pt-5">
-                        Non ci sono progetti da visualizzare
-                    </h1>
-                </div>
+                <h1 class="text-center pt-5 mt-5 text-secondary">
+                    Non ci sono progetti da visualizzare
+                </h1>
             @endforelse
         </div>
         {{ $projects->links()}}
