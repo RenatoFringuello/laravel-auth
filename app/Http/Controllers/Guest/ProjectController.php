@@ -15,7 +15,7 @@ class ProjectController extends Controller
     public function index()
     {
         //24 è divisibile per 2 per 3 e per 4 (nota le classi col-x col-b-x inserite)
-        $projects = Project::orderBy('end_date', 'ASC')->paginate(24);
+        $projects = Project::orderBy('end_date', 'ASC')->paginate(12);
 
         return view('guest.projects.index', compact('projects'));
     }
