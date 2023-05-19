@@ -10,7 +10,7 @@
                 <tr class="align-middle">
                     {{-- show all the links --}}
                     @foreach ($fields as $field)
-                        <th class="text-center"><a class="text-white" href="{{route('admin.projects.index', ['sort' => Str::slug($field,'_'), 'dir' => $dir ?? 0])}}">{{$field}}</a></th>
+                        <th class="text-center {{app('request')->input('sort') == Str::slug($field,'_') ? (($dir)? 'sortable-up' : 'sortable-down') : ''}}"><a class="text-white" href="{{route('admin.projects.index', ['sort' => Str::slug($field,'_'), 'dir' => $dir ?? 0])}}">{{$field}}</a></th>
                     @endforeach
                     <th class="text-center">
                         <a class="text-decoration-none btn btn-primary border-white" href="{{route('admin.projects.create')}}">

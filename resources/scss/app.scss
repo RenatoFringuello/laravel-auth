@@ -1,2 +1,15 @@
 @import '~bootstrap/scss/bootstrap';
 @import './customBootstrap';
+
+th{
+    &::after{
+        content: '';
+        margin-left:.2rem;
+    }
+    &.sortable-up::after{
+        content: '\25B2';
+    }
+    &.sortable-down::after{
+        content: '\25BC';
+    }
+}
